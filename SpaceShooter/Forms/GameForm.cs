@@ -71,11 +71,37 @@ namespace SpaceShooter.Forms
 
         private void GameForm_KeDown(object sender, KeyEventArgs e)
         {
+            if (e.KeyCode == Keys.Escape)
+            {
+                this.Close(); 
+            }
+            if (e.KeyCode == Keys.Left || e.KeyCode == Keys.A)
+                IsMovingLeft = true;
+
+            if (e.KeyCode == Keys.Right || e.KeyCode == Keys.D)
+                IsMovingRight = true;
+
+            if (e.KeyCode == Keys.Up || e.KeyCode == Keys.W)
+                IsMovingUp = true;
+
+            if (e.KeyCode == Keys.Down || e.KeyCode == Keys.S)
+                IsMovingDown = true;
 
         }
 
         private void GameForm_KeyUp(object sender, KeyEventArgs e)
         {
+            if (e.KeyCode == Keys.Left || e.KeyCode == Keys.A)
+                IsMovingLeft = false;
+
+            if (e.KeyCode == Keys.Right || e.KeyCode == Keys.D)
+                IsMovingRight = false;
+
+            if (e.KeyCode == Keys.Up || e.KeyCode == Keys.W)
+                IsMovingUp = false;
+
+            if (e.KeyCode == Keys.Down || e.KeyCode == Keys.S)
+                IsMovingDown = false;
 
         }
     }
