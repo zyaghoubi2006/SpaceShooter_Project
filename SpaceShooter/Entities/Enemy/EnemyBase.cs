@@ -33,5 +33,19 @@ namespace SpaceShooter.Entities.Enemy
             IsAlive = true;
 
         }
+
+        public virtual void TakeDamage(int amount)
+        {
+            HP -= amount;
+            if (HP <= 0)
+            {
+                HP = 0;
+                IsAlive = false;
+            }
+        }
+
+        public abstract override void Update(float daltaTime);
+
+        public abstract override void Draw(Graphics g);
     }
 }
