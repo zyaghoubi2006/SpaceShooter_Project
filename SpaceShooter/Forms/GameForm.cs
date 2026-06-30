@@ -109,6 +109,8 @@ namespace SpaceShooter.Forms
 
             if (e.KeyCode == Keys.Down || e.KeyCode == Keys.S)
                 IsMovingDown = true;
+            if (e.KeyCode == Keys.Space)
+                ShootBullet();
 
         }
 
@@ -134,7 +136,12 @@ namespace SpaceShooter.Forms
 
             player.Draw(e.Graphics);
 
-            
+            foreach (Bullet bullet in bullets)
+            {
+                bullet.Draw(e.Graphics);
+            }
+
+
         }
     }
 }
