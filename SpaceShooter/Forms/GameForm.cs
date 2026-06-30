@@ -17,18 +17,41 @@ namespace SpaceShooter.Forms
 
         private Player player;
 
+        private DateTime lastTime;
         private bool IsMovingLeft;
         private bool IsMovingRight;
         private bool IsMovingUp;
         private bool IsMovingDown;
 
+        private DateTime lastShootTime = DateTime.MinValue;
+
         public GameForm()
         {
             InitializeComponent();
             this.DoubleBuffered = true;
+            InitializeGame();
         }
 
+        private void InitializeGame()
+        {
+            lastTime = DateTime.Now;
+            player = new Player(180, 400, 50, 50, 8);
+            GameTimer = new Timer();
+            GameTimer.Interval = 20;
+            GameTimer.Tick += Gameloop;
+            GameTimer.Start();
+           
+        }
 
+        private void Gameloop(object sender, EventArgs e)
+        {
+            DateTime now = DateTime.Now;
+            float deltaTime = (float)(now - lastTime).TotalMilliseconds;
+            lastTime = now;
+            UpdatePlayerMovement(deltaTime);
+            
+            Invalidate();
+        }
 
         private void UpdatePlayerMovement(float deltaTime)
         {
