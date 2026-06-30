@@ -55,7 +55,7 @@ namespace SpaceShooter.Forms
             float deltaTime = (float)(now - lastTime).TotalMilliseconds;
             lastTime = now;
             UpdatePlayerMovement(deltaTime);
-            
+            UpdateBullets(deltaTime);
             Invalidate();
         }
 
@@ -91,6 +91,20 @@ namespace SpaceShooter.Forms
 
             bullets.Add(new Bullet(bulletX,bulletY,bulletWidth,bulletHeight,0,bulletSpeedY,true));
         }
+
+        private void UpdateBullets(float deltaTime)
+        {
+            for (int i = bullets.Count - 1; i >= 0; i--)
+            {
+                bullets[i].Update(deltaTime);
+
+                if (bullets[i].Y + bullets[i].Height < 0)
+                {
+                    bullets.RemoveAt(i);
+                }
+            }
+        }
+
 
         private void GameForm_KeDown(object sender, KeyEventArgs e)
         {
