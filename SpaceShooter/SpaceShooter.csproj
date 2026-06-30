@@ -48,6 +48,10 @@
   <ItemGroup>
     <Compile Include="Core\GameEngin.cs" />
     <Compile Include="Entities\Bullet.cs" />
+    <Compile Include="Entities\Enemy\ShooterEnemy.cs" />
+    <Compile Include="Entities\Enemy\ScoutEnemy.cs" />
+    <Compile Include="Entities\Enemy\StanderdEnemy.cs" />
+    <Compile Include="Entities\Enemy\EnemyBase.cs" />
     <Compile Include="Entities\Player.cs" />
     <Compile Include="Forms\AboutForm.cs">
       <SubType>Form</SubType>
@@ -121,9 +125,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Entities\Enemy\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="Resources\resources_audio_menu_click.wav" />
   </ItemGroup>
