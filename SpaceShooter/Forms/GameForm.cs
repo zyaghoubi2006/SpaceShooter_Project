@@ -104,5 +104,14 @@ namespace SpaceShooter.Forms
                 IsMovingDown = false;
 
         }
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            base.OnPaint(e);
+
+            player.Draw(e.Graphics);
+
+            
+        }
     }
 }
