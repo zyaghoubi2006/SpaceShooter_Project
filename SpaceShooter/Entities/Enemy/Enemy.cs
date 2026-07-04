@@ -12,7 +12,7 @@ namespace SpaceShooter.Entities
         public int CoinValue { get; set; }
         public Color Color { get; set; }
 
-        public event Action<float, float, float, float> OnShoot; // x, y, velocityX, velocityY
+        public event Action<float, float, float, float> OnShoot;
 
         protected Enemy(float x, float y, float width, float height) : base(x, y, width, height)
         {
@@ -39,13 +39,11 @@ namespace SpaceShooter.Entities
         {
             if (!IsActive) return;
 
-            // رسم دشمن
             using (SolidBrush brush = new SolidBrush(Color))
             {
                 g.FillRectangle(brush, GetBounds());
             }
 
-            // رسم نوار سلامتی
             float healthBarWidth = Size.Width;
             float healthBarHeight = 4;
             float healthPercent = (float)Health / MaxHealth;
