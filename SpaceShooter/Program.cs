@@ -11,7 +11,10 @@ namespace SpaceShooter
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainMenuForm());
+
+            AudioManager audioManager = new AudioManager();
+            Application.Run(new MainMenuForm(audioManager));
+            audioManager.Dispose();
         }
     }
 }
