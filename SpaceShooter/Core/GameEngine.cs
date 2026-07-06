@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Media;
 
 namespace SpaceShooter.Core
 {
@@ -28,8 +29,18 @@ namespace SpaceShooter.Core
         private int enemiesToSpawnThisWave;
         private int enemiesSpawnedThisWave;
 
-        public GameEngine(int screenWidth, int screenHeight)
+        private bool _playerDelayedExplosion = false;
+        private DateTime _playerExplosionTime;
+
+        private AudioManager audioManager;
+
+        private int _blinkCounter = 0;
+
+
+        public GameEngine(int screenWidth, int screenHeight, AudioManager audioManager)
         {
+            this.audioManager = audioManager;
+
             Player = new Player(screenWidth + 150 , screenHeight + 300);
             Enemies = new List<Enemy>();
             Bullets = new List<Bullet>();
@@ -54,6 +65,12 @@ namespace SpaceShooter.Core
 
         public void Update(float deltaTime)
         {
+            if (_playerDelayedExplosion && DateTime.Now >= _playerExplosionTime)
+            {
+                _playerDelayedExplosion = false;
+                Player.TakeDamage(50);
+            }
+
             if (IsWaveComplete)
             {
                 WaveTransitionTimer += deltaTime;
@@ -138,13 +155,13 @@ namespace SpaceShooter.Core
                     enemy = new ScoutEnemy(x, y);
                     break;
                 case 2:
-                    enemy = new ShooterEnemy(x, y);
+                    enemy = new ShooterEnemy(x, y, audioManager);
                     break;
                 case 3:
-                    enemy = new HeavyTankEnemy(x, y);
+                    enemy = new TerroristEnemy(x, y);
                     break;
                 case 4:
-                    enemy = new TerroristEnemy(x, y);
+                    enemy = new HeavyTankEnemy(x, y, audioManager);
                     break;
             }
 
@@ -158,26 +175,34 @@ namespace SpaceShooter.Core
             {
                 int roll = random.Next(100);
                 if (roll < 50) return 0;
-                if (roll < 80) return 1;
-                if (roll < 95) return 2;
-                return 4;
+                return 1;
             }
+
             else if (CurrentWave < 6)
             {
                 int roll = random.Next(100);
-                if (roll < 30) return 0;
+                if (roll < 20) return 0;
                 if (roll < 50) return 1;
-                if (roll < 75) return 2;
-                if (roll < 90) return 4;
+                if (roll < 85) return 2;
                 return 3;
             }
-            else
+
+            else if (CurrentWave < 9)
             {
                 int roll = random.Next(100);
                 if (roll < 15) return 0;
-                if (roll < 30) return 1;
-                if (roll < 55) return 2;
-                if (roll < 75) return 3;
+                if (roll < 35) return 1;
+                if (roll < 65) return 2;
+                return 3;
+            }
+
+            else
+            {
+                int roll = random.Next(100);
+                if (roll < 10) return 0;
+                if (roll < 25) return 1;
+                if (roll < 50) return 2;
+                if (roll < 80) return 3;
                 return 4;
             }
         }
@@ -204,15 +229,18 @@ namespace SpaceShooter.Core
 
                 if (enemy.CollidesWith(Player))
                 {
-                    if (enemy is TerroristEnemy terrorist && terrorist.IsExploding)
+                    if (enemy is TerroristEnemy terrorist)
                     {
-                        Player.TakeDamage(50);
                         enemy.IsActive = false;
+                        _playerDelayedExplosion = true;
+                        _playerExplosionTime = DateTime.Now.AddSeconds(1);
+                        audioManager.PlaySoundEffect(@"F:\SpaceShooter\SpaceShooter\Resources\bombexplosion4.mp3");
                         continue;
                     }
                     else
                     {
                         Player.TakeDamage(20);
+                        audioManager.PlaySoundEffect(@"F:\SpaceShooter\SpaceShooter\Resources\PlayerDamage.wav");
                         enemy.IsActive = false;
                         continue;
                     }
@@ -242,6 +270,7 @@ namespace SpaceShooter.Core
                 if (!bullet.IsPlayerBullet && Player.CollidesWith(bullet))
                 {
                     Player.TakeDamage(bullet.Damage);
+                    audioManager.PlaySoundEffect(@"F:\SpaceShooter\SpaceShooter\Resources\PlayerDamage.wav");
                     bullet.IsActive = false;
                 }
             }
@@ -251,6 +280,7 @@ namespace SpaceShooter.Core
                 if (Coins[i].CheckCollision(Player))
                 {
                     Player.Coins += Coins[i].Value;
+                    audioManager.PlaySoundEffect(@"F:\SpaceShooter\SpaceShooter\Resources\CoinDrop.wav");
                 }
             }
         }
@@ -268,31 +298,40 @@ namespace SpaceShooter.Core
 
         private float GetCoinDropChance(Enemy enemy)
         {
-            float baseChance = 0.3f;
+            float baseChance = 0.2f;
 
             if (enemy is HeavyTankEnemy)
+                baseChance = 0.85f;
+            else if (enemy is TerroristEnemy)
                 baseChance = 0.6f;
-            else if (enemy is ShooterEnemy || enemy is TerroristEnemy)
-                baseChance = 0.45f;
+            else if (enemy is ShooterEnemy)
+                baseChance = 0.5f;
             else if (enemy is ScoutEnemy)
                 baseChance = 0.35f;
+            else if (enemy is StandardEnemy)
+                baseChance = 0.25f;
 
             baseChance += CurrentWave * 0.02f;
-            return Math.Min(baseChance, 0.8f);
+            return Math.Min(baseChance, 0.95f);
         }
 
         private CoinType DetermineCoinType(Enemy enemy)
         {
-            int goldChance = 20;
+            int goldChance = 10;
 
             if (enemy is HeavyTankEnemy)
-                goldChance = 50;
+                goldChance = 70;
             else if (enemy is TerroristEnemy)
-                goldChance = 40;
+                goldChance = 50;
             else if (enemy is ShooterEnemy)
-                goldChance = 30;
+                goldChance = 35;
+            else if (enemy is ScoutEnemy)
+                goldChance = 20;
+            else if (enemy is StandardEnemy)
+                goldChance = 15;
 
             goldChance += CurrentWave * 2;
+            goldChance = Math.Min(goldChance, 85);
 
             return random.Next(100) < goldChance ? CoinType.Gold : CoinType.Silver;
         }
