@@ -43,7 +43,7 @@ namespace SpaceShooter.Entities.Enemies
         protected override void Shoot()
         {
             FireBullet(0f, 300f);
-            audioManager.PlaySoundEffect(@"F:\SpaceShooter\SpaceShooter\Resources\enemyshoot.wav");
+            audioManager.PlaySoundEffect(@"Resources\enemyshoot.wav");
         }
     }
 }

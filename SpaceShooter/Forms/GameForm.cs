@@ -32,7 +32,7 @@ namespace SpaceShooter.Forms
             audioManager = new AudioManager();
             audioManager.SetMusicVolume(0.05f);
             audioManager.SetSfxVolume(1.0f);
-            audioManager.PlayBackgroundMusic(@"F:\SpaceShooter\SpaceShooter\Resources\Background1.wav");
+            audioManager.PlayBackgroundMusic(@"Resources\Background1.wav");
 
             this.FormBorderStyle = FormBorderStyle.None;
             this.WindowState = FormWindowState.Maximized;
@@ -67,7 +67,7 @@ namespace SpaceShooter.Forms
                 TimeSpan timeSinceLastShoot = currentTime - lastShootTime;
                 if (timeSinceLastShoot.TotalSeconds >= ShootCooldown)
                 {
-                    audioManager.PlaySoundEffect(@"F:\SpaceShooter\SpaceShooter\Resources\shooting.wav");
+                    audioManager.PlaySoundEffect(@"Resources\shooting.wav");
 
                     gameEngine.Player.Shoot();
                     if (gameEngine.Player.LastBullet != null)
@@ -102,7 +102,7 @@ namespace SpaceShooter.Forms
         {
             gameTimer.Stop();
             audioManager.StopBackgroundMusic();
-            audioManager.PlaySoundEffect(@"F:\SpaceShooter\SpaceShooter\Resources\Winning.wav");
+            audioManager.PlaySoundEffect(@"Resources\Winning.wav");
             MessageBox.Show(
                 $"CONGRATS! YOU WON!\n\nFinal score: {gameEngine.Player.Score}\nCoins gained: {gameEngine.Player.Coins}",
                 "End Game",
@@ -218,7 +218,7 @@ namespace SpaceShooter.Forms
         {
             gameTimer.Stop();
             audioManager.StopBackgroundMusic();
-            audioManager.PlaySoundEffect(@"F:\SpaceShooter\SpaceShooter\Resources\gameover.wav");
+            audioManager.PlaySoundEffect(@"Resources\gameover.wav");
             MessageBox.Show(
                 $"Game Over!\nScore: {gameEngine.Player.Score}\nCoins: {gameEngine.Player.Coins}",
                 "Game Over",

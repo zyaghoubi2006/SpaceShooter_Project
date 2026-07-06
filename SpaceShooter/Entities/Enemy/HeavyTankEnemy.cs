@@ -44,7 +44,7 @@ namespace SpaceShooter.Entities.Enemies
         protected override void Shoot()
         {
             float bulletSpeed = 250f;
-            audioManager.PlaySoundEffect(@"F:\SpaceShooter\SpaceShooter\Resources\enemyshoot.wav");
+            audioManager.PlaySoundEffect(@"Resources\enemyshoot.wav");
             for (int i = 0; i < 8; i++)
             {
                 float angle = i * 45f * (float)Math.PI / 180f;

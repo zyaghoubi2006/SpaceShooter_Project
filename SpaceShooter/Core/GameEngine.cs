@@ -234,13 +234,13 @@ namespace SpaceShooter.Core
                         enemy.IsActive = false;
                         _playerDelayedExplosion = true;
                         _playerExplosionTime = DateTime.Now.AddSeconds(1);
-                        audioManager.PlaySoundEffect(@"F:\SpaceShooter\SpaceShooter\Resources\bombexplosion4.mp3");
+                        audioManager.PlaySoundEffect(@"Resources\bombexplosion4.mp3");
                         continue;
                     }
                     else
                     {
                         Player.TakeDamage(20);
-                        audioManager.PlaySoundEffect(@"F:\SpaceShooter\SpaceShooter\Resources\PlayerDamage.wav");
+                        audioManager.PlaySoundEffect(@"Resources\PlayerDamage.wav");
                         enemy.IsActive = false;
                         continue;
                     }
@@ -270,7 +270,7 @@ namespace SpaceShooter.Core
                 if (!bullet.IsPlayerBullet && Player.CollidesWith(bullet))
                 {
                     Player.TakeDamage(bullet.Damage);
-                    audioManager.PlaySoundEffect(@"F:\SpaceShooter\SpaceShooter\Resources\PlayerDamage.wav");
+                    audioManager.PlaySoundEffect(@"Resources\PlayerDamage.wav");
                     bullet.IsActive = false;
                 }
             }
@@ -280,7 +280,7 @@ namespace SpaceShooter.Core
                 if (Coins[i].CheckCollision(Player))
                 {
                     Player.Coins += Coins[i].Value;
-                    audioManager.PlaySoundEffect(@"F:\SpaceShooter\SpaceShooter\Resources\CoinDrop.wav");
+                    audioManager.PlaySoundEffect(@"Resources\CoinDrop.wav");
                 }
             }
         }
