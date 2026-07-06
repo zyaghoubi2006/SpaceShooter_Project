@@ -59,11 +59,5 @@ namespace SpaceShooter.Entities.Enemies
 
             return distance < 40f;
         }
-
-        public void Explode()
-        {
-            IsExploding = true;
-            IsActive = false;
-        }
     }
 }
