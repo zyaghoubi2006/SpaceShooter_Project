@@ -30,9 +30,15 @@ namespace SpaceShooter.Forms
         private void InitializeGame()
         {
             audioManager = new AudioManager();
-            audioManager.SetMusicVolume(0.05f);
-            audioManager.SetSfxVolume(1.0f);
-            audioManager.PlayBackgroundMusic(@"Resources\Background1.wav");
+            var track = AudioSettings.Tracks[AudioSettings.SelectedTrackIndex];
+            string fullPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, track.Path);
+
+            audioManager.SetMusicMuted(AudioSettings.MusicMuted);
+            audioManager.SetSfxMuted(AudioSettings.SfxMuted);
+            audioManager.SetMusicVolume(AudioSettings.MusicVolume);
+            audioManager.SetSfxVolume(AudioSettings.SfxVolume);
+            audioManager.PlayBackgroundMusic(fullPath);
+
 
             this.FormBorderStyle = FormBorderStyle.None;
             this.WindowState = FormWindowState.Maximized;
