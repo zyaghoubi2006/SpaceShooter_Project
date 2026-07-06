@@ -17,16 +17,20 @@ namespace SpaceShooter.Forms
 
     {
         private SoundPlayer ClickPlayer;
+        private AudioManager audioManager;
 
-        public MainMenuForm()
+        public MainMenuForm(AudioManager audioManager)
         {
             InitializeComponent();
+            this.audioManager = audioManager;
             ClickPlayer = new SoundPlayer(Properties.Resources.resources_audio_menu_click);
         }
+
         private void PlayClickSound()
         {
             ClickPlayer.Play();
         }
+
         private void PlayClickSoundSync()
         {
             ClickPlayer.PlaySync();
@@ -56,7 +60,7 @@ namespace SpaceShooter.Forms
         {
             PlayClickSound();
             this.Hide();
-            OptionForm optionform = new OptionForm();
+            OptionForm optionform = new OptionForm(audioManager);
             optionform.ShowDialog();
             this.Show();
         }
