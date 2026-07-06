@@ -10,7 +10,9 @@ namespace SpaceShooter.Entities.Enemies
         private const float ShootInterval = 3f;
         private const float Speed = 30f;
 
-        public HeavyTankEnemy(float x, float y) : base(x, y, 50, 50)
+        private AudioManager audioManager;
+
+        public HeavyTankEnemy(float x, float y, AudioManager audioManager) : base(x, y, 50, 50)
         {
             Health = 200;
             MaxHealth = 200;
@@ -18,6 +20,8 @@ namespace SpaceShooter.Entities.Enemies
             CoinValue = 50;
             Color = Color.DarkGray;
             Velocity = new PointF(0, Speed);
+
+            this.audioManager = audioManager;
         }
 
         public override void Update(float deltaTime)
@@ -40,6 +44,7 @@ namespace SpaceShooter.Entities.Enemies
         protected override void Shoot()
         {
             float bulletSpeed = 250f;
+            audioManager.PlaySoundEffect(@"F:\SpaceShooter\SpaceShooter\Resources\enemyshoot.wav");
             for (int i = 0; i < 8; i++)
             {
                 float angle = i * 45f * (float)Math.PI / 180f;
