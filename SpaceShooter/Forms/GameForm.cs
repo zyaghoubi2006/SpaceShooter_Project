@@ -164,6 +164,11 @@ namespace SpaceShooter.Forms
             Graphics g = e.Graphics;
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
 
+            if (GameAssets.BackgroundImg != null)
+            {
+                g.DrawImage(GameAssets.BackgroundImg, 0, 0, ClientSize.Width, ClientSize.Height);
+            }
+
             gameEngine.Draw(g);
             DrawHUD(g);
         }
