@@ -10,8 +10,10 @@ namespace SpaceShooter.Entities.Enemies
         private const float Speed = 80f;
 
         private AudioManager audioManager;
+        protected override Image Sprite => GameAssets.ShooterEnemyImg;
 
-        public ShooterEnemy(float x, float y, AudioManager audioManager) : base(x, y, 32, 32)
+
+        public ShooterEnemy(float x, float y, AudioManager audioManager) : base(x, y, 60, 60)
         {
             Health = 50;
             MaxHealth = 50;

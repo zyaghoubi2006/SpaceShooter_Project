@@ -12,7 +12,10 @@ namespace SpaceShooter.Entities.Enemies
         private const float Frequency = 3f;
         private readonly float _centerX;
 
-        public ScoutEnemy(float x, float y) : base(x, y, 25, 25)
+        protected override Image Sprite => GameAssets.ScoutEnemyImg;
+
+
+        public ScoutEnemy(float x, float y) : base(x, y, 48, 48)
         {
             Health = 20;
             MaxHealth = 20;

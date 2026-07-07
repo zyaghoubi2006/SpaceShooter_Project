@@ -1,6 +1,7 @@
-﻿using System;
+﻿using SpaceShooter.Core;
+using System;
 using System.Drawing;
-using SpaceShooter.Core;
+using System.Security.Policy;
 
 namespace SpaceShooter.Entities
 {
@@ -13,6 +14,8 @@ namespace SpaceShooter.Entities
         public Color Color { get; set; }
 
         public event Action<float, float, float, float> OnShoot;
+
+        protected abstract Image Sprite { get; }
 
         protected Enemy(float x, float y, float width, float height) : base(x, y, width, height)
         {
@@ -39,10 +42,7 @@ namespace SpaceShooter.Entities
         {
             if (!IsActive) return;
 
-            using (SolidBrush brush = new SolidBrush(Color))
-            {
-                g.FillRectangle(brush, GetBounds());
-            }
+            g.DrawImage(Sprite, GetBounds());
 
             float healthBarWidth = Size.Width;
             float healthBarHeight = 4;

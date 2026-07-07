@@ -20,7 +20,7 @@ namespace SpaceShooter.Entities
         public int Coins { get; set; }
         public Bullet LastBullet { get; private set; }
 
-        public Player(float x, float y) : base(x, y, 40, 40)
+        public Player(float x, float y) : base(x, y, 65, 65)
         {
             Health = 100;
             Score = 0;
@@ -73,7 +73,7 @@ namespace SpaceShooter.Entities
         {
             if (shootTimer <= 0)
             {
-                float bulletX = Position.X + Size.Width / 2;
+                float bulletX = Position.X + Size.Width / 2 ;
                 float bulletY = Position.Y;
                 LastBullet = new Bullet(bulletX, bulletY, 0, -1, true);
                 shootTimer = ShootCooldown;
@@ -86,7 +86,7 @@ namespace SpaceShooter.Entities
 
         public override void Draw(Graphics g)
         {
-            g.FillRectangle(Brushes.Blue, GetBounds());
+            g.DrawImage(GameAssets.PlayerImg, GetBounds());
         }
 
         public void TakeDamage(int damage)

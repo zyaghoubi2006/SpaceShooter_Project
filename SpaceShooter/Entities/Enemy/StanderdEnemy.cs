@@ -6,8 +6,10 @@ namespace SpaceShooter.Entities.Enemies
     public class StandardEnemy : Enemy
     {
         private const float Speed = 150f;
+        protected override Image Sprite => GameAssets.StandardEnemyImg;
 
-        public StandardEnemy(float x, float y) : base(x, y, 30, 30)
+
+        public StandardEnemy(float x, float y) : base(x, y, 60, 60)
         {
             Health = 30;
             MaxHealth = 30;

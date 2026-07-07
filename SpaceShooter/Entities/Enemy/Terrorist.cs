@@ -8,16 +8,17 @@ namespace SpaceShooter.Entities.Enemies
     {
         private PointF _targetPosition;
         private const float Speed = 150f;
-        public bool IsExploding { get; private set; }
 
-        public TerroristEnemy(float x, float y) : base(x, y, 35, 35)
+        protected override Image Sprite => GameAssets.TerroristEnemyImg;
+
+
+        public TerroristEnemy(float x, float y) : base(x, y, 70, 70)
         {
             Health = 80;
             MaxHealth = 80;
             ScoreValue = 50;
             CoinValue = 30;
             Color = Color.OrangeRed;
-            IsExploding = false;
         }
 
         public void SetTarget(float playerX, float playerY)

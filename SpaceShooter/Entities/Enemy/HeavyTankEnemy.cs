@@ -11,8 +11,10 @@ namespace SpaceShooter.Entities.Enemies
         private const float Speed = 30f;
 
         private AudioManager audioManager;
+        protected override Image Sprite => GameAssets.HeavyTankEnemyImg;
 
-        public HeavyTankEnemy(float x, float y, AudioManager audioManager) : base(x, y, 50, 50)
+
+        public HeavyTankEnemy(float x, float y, AudioManager audioManager) : base(x, y, 90, 90)
         {
             Health = 200;
             MaxHealth = 200;
