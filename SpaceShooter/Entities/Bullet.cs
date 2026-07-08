@@ -41,8 +41,8 @@ namespace SpaceShooter.Entities
 
         public override void Draw(Graphics g)
         {
-            Brush brush = IsPlayerBullet ? Brushes.Yellow : Brushes.Red;
-            g.DrawImage(GameAssets.BulletImg, Position.X, Position.Y, Size.Width, Size.Height);
+            Image Img = IsPlayerBullet ? GameAssets.BulletImg : GameAssets.EnemyBulletImg;
+            g.DrawImage(Img, Position.X, Position.Y, Size.Width, Size.Height);
         }
     }
 }
