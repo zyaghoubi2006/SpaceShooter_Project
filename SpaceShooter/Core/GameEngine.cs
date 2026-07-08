@@ -1,12 +1,14 @@
 ﻿using SpaceShooter.Entities;
 using SpaceShooter.Entities;
 using SpaceShooter.Entities.Enemies;
+using SpaceShooter.Managers.Data;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Media;
-using System.Drawing.Drawing2D;
+using System.Numerics;
 
 namespace SpaceShooter.Core
 {
@@ -50,6 +52,12 @@ namespace SpaceShooter.Core
             Coins = new List<Coin>();
             random = new Random();
             spawnTimer = 0;
+
+
+            var playerData = PlayerRepository.GetPlayerData();
+            Player.ExtraLives = playerData.ExtraLivesOwned;
+            Player.MaxHealth = playerData.MaxHealth;
+            Player.Health = Player.MaxHealth;
 
             CurrentWave = 1;
             TotalWaves = 10;
@@ -283,6 +291,7 @@ namespace SpaceShooter.Core
                 if (Coins[i].CheckCollision(Player))
                 {
                     Player.Coins += Coins[i].Value;
+                    PlayerRepository.AddCoins(Coins[i].Value);
                     audioManager.PlaySoundEffect(@"Resources\CoinDrop.wav");
                 }
             }

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using SpaceShooter.Models;
+using SpaceShooter.Managers.Data;
 
 namespace SpaceShooter.Core
 {
@@ -11,6 +13,7 @@ namespace SpaceShooter.Core
     {
         public static Image PlayerImg;
         public static Image BulletImg;
+        public static Image EnemyBulletImg;
         public static Image StandardEnemyImg;
         public static Image ScoutEnemyImg;
         public static Image ShooterEnemyImg;
@@ -27,7 +30,61 @@ namespace SpaceShooter.Core
             HeavyTankEnemyImg = MakeTransparent(Properties.Resources.heavytankenemy);
             TerroristEnemyImg = MakeTransparent(Properties.Resources.terroristenemy);
             BulletImg = MakeTransparent(Properties.Resources.bullet);
+            EnemyBulletImg = MakeTransparent(Properties.Resources.bullet1);
             BackgroundImg = Properties.Resources.background;
+
+            LoadEquippedItems();
+        }
+
+        public static void LoadEquippedItems()
+        {
+            var equippedShip = ShopRepository.GetEquippedItem(ShopItemType.ShipSkin);
+            PlayerImg = MakeTransparent(GetShipImage(equippedShip?.ItemName));
+
+            var equippedBullet = ShopRepository.GetEquippedItem(ShopItemType.BulletStyle);
+            BulletImg = MakeTransparent(GetBulletImage(equippedBullet?.ItemName));
+
+            var equippedBg = ShopRepository.GetEquippedItem(ShopItemType.Background);
+            BackgroundImg = GetBackgroundImage(equippedBg?.ItemName);
+        }
+
+        private static Bitmap GetShipImage(string itemName)
+        {
+            switch (itemName)
+            {
+                case "player_white": return Properties.Resources.spaceship1;
+                case "player_blue": return Properties.Resources.spaceship2;
+                case "player_gray": return Properties.Resources.spaceship3;
+                case "player_green": return Properties.Resources.spaceship4;
+                case "player_yellow": return Properties.Resources.spaceship5;
+                default: return Properties.Resources.spaceship1;
+            }
+        }
+
+        private static Bitmap GetBulletImage(string itemName)
+        {
+            switch (itemName)
+            {
+                case "yellow_bullet": return Properties.Resources.bullet1;
+                case "blue_bullet": return Properties.Resources.bullet2;
+                case "green_bullet": return Properties.Resources.bullet3;
+                case "red_bullet": return Properties.Resources.bullet4;
+                case "purple_bullet": return Properties.Resources.bullet5;
+                default: return Properties.Resources.bullet1;
+            }
+        }
+
+        private static Bitmap GetBackgroundImage(string itemName)
+        {
+            switch (itemName)
+            {
+                case "background1": return Properties.Resources.background1;
+                case "background2": return Properties.Resources.background2;
+                case "background3": return Properties.Resources.background3;
+                case "background4": return Properties.Resources.background4;
+                case "background5": return Properties.Resources.background5;
+                default: return Properties.Resources.background1;
+            }
         }
 
         private static Bitmap MakeTransparent(Bitmap source)
