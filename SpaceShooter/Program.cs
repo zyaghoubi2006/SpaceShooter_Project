@@ -1,6 +1,7 @@
-﻿using System;
+﻿using SpaceShooter.Forms;
+using SpaceShooter.Managers;
+using System;
 using System.Windows.Forms;
-using SpaceShooter.Forms;
 
 namespace SpaceShooter
 {
@@ -9,6 +10,8 @@ namespace SpaceShooter
         [STAThread]
         static void Main()
         {
+            DatabaseManager.Initialize();
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
