@@ -28,6 +28,8 @@ namespace SpaceShooter.Forms
 
         public ShopForm()
         {
+            this.BackgroundImage = Properties.Resources.shopbackground;
+            this.BackgroundImageLayout = ImageLayout.Stretch;
             InitializeComponent();
             InitializeCustomControls();
             RefreshShopUI();
@@ -41,13 +43,13 @@ namespace SpaceShooter.Forms
             this.StartPosition = FormStartPosition.CenterScreen;
             this.FormBorderStyle = FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
-            this.BackColor = SystemColors.Control;
+            this.BackColor = Color.FromArgb(15, 15, 20);
 
             Panel topPanel = new Panel
             {
                 Dock = DockStyle.Top,
                 Height = 60,
-                BackColor = SystemColors.ControlLight
+                BackColor = Color.FromArgb(25, 25, 32)
             };
 
             lblCoins = new Label
@@ -55,7 +57,7 @@ namespace SpaceShooter.Forms
                 Location = new Point(20, 15),
                 Size = new Size(200, 30),
                 Font = new Font("Arial", 12, FontStyle.Bold),
-                ForeColor = Color.DarkGoldenrod,
+                ForeColor = Color.Gold,
                 Text = "Coins: 0"
             };
 
@@ -64,7 +66,7 @@ namespace SpaceShooter.Forms
                 Location = new Point(250, 15),
                 Size = new Size(200, 30),
                 Font = new Font("Arial", 12, FontStyle.Bold),
-                ForeColor = Color.DarkCyan,
+                ForeColor = Color.Cyan,
                 Text = "High Score: 0"
             };
 
@@ -73,7 +75,7 @@ namespace SpaceShooter.Forms
                 Location = new Point(480, 15),
                 Size = new Size(200, 30),
                 Font = new Font("Arial", 12, FontStyle.Bold),
-                ForeColor = Color.Green,
+                ForeColor = Color.LimeGreen,
                 Text = "Extra Lives: 0"
             };
 
@@ -85,19 +87,19 @@ namespace SpaceShooter.Forms
                 Font = new Font("Arial", 10)
             };
 
-            TabPage tabShips = new TabPage("Ships");
+            TabPage tabShips = new TabPage("Ships") { BackColor = Color.FromArgb(20, 20, 26) };
             flpShips = CreateFlowLayoutPanel();
             tabShips.Controls.Add(flpShips);
 
-            TabPage tabBullets = new TabPage("Bullets");
+            TabPage tabBullets = new TabPage("Bullets") { BackColor = Color.FromArgb(20, 20, 26) };
             flpBullets = CreateFlowLayoutPanel();
             tabBullets.Controls.Add(flpBullets);
 
-            TabPage tabPowerUps = new TabPage("Extralife");
+            TabPage tabPowerUps = new TabPage("Extralife") { BackColor = Color.FromArgb(20, 20, 26) };
             flpPowerUps = CreateFlowLayoutPanel();
             tabPowerUps.Controls.Add(flpPowerUps);
 
-            TabPage tabBackgrounds = new TabPage("Backgrounds");
+            TabPage tabBackgrounds = new TabPage("Backgrounds") { BackColor = Color.FromArgb(20, 20, 26) };
             flpBackgrounds = CreateFlowLayoutPanel();
             tabBackgrounds.Controls.Add(flpBackgrounds);
 
@@ -109,10 +111,11 @@ namespace SpaceShooter.Forms
                 Dock = DockStyle.Bottom,
                 Height = 50,
                 Font = new Font("Arial", 12, FontStyle.Bold),
-                BackColor = SystemColors.Control,
-                ForeColor = Color.Black,
-                FlatStyle = FlatStyle.Standard
+                BackColor = Color.FromArgb(35, 35, 45),
+                ForeColor = Color.White,
+                FlatStyle = FlatStyle.Flat
             };
+            btnBack.FlatAppearance.BorderColor = Color.FromArgb(60, 60, 75);
             btnBack.Click += btnBack_Click;
 
             this.Controls.Add(tabShop);
@@ -128,10 +131,11 @@ namespace SpaceShooter.Forms
                 AutoScroll = true,
                 FlowDirection = FlowDirection.LeftToRight,
                 WrapContents = true,
-                BackColor = SystemColors.ControlLightLight,
+                BackColor = Color.FromArgb(20, 20, 26),
                 Padding = new Padding(10)
             };
         }
+
 
         private void RefreshShopUI()
         {
@@ -178,7 +182,7 @@ namespace SpaceShooter.Forms
                 Height = 200,
                 BorderStyle = BorderStyle.FixedSingle,
                 Margin = new Padding(10),
-                BackColor = SystemColors.ControlLightLight
+                BackColor = Color.FromArgb(30, 30, 40)
             };
 
             var picBox = new PictureBox
@@ -198,7 +202,7 @@ namespace SpaceShooter.Forms
                 Width = 140,
                 Height = 20,
                 TextAlign = ContentAlignment.MiddleCenter,
-                ForeColor = Color.Black,
+                ForeColor = Color.White,
                 Font = new Font("Arial", 9, FontStyle.Bold)
             };
 
@@ -209,7 +213,7 @@ namespace SpaceShooter.Forms
                 Width = 140,
                 Height = 20,
                 TextAlign = ContentAlignment.MiddleCenter,
-                ForeColor = Color.DarkGoldenrod,
+                ForeColor = Color.Gold,
                 Font = new Font("Arial", 9)
             };
 
@@ -219,34 +223,36 @@ namespace SpaceShooter.Forms
                 Height = 35,
                 Location = new Point(10, 160),
                 Font = new Font("Arial", 9, FontStyle.Bold),
-                FlatStyle = FlatStyle.Standard
+                FlatStyle = FlatStyle.Flat
             };
+            btn.FlatAppearance.BorderColor = Color.FromArgb(70, 70, 90);
 
             if (item.IsEquipped)
             {
                 btn.Text = "✓ Equipped";
                 btn.Enabled = false;
-                btn.BackColor = SystemColors.ControlDark;
-                btn.ForeColor = Color.Black;
+                btn.BackColor = Color.FromArgb(45, 45, 55);
+                btn.ForeColor = Color.LimeGreen;
             }
             else if (item.IsPurchased)
             {
                 btn.Text = "Equip";
-                btn.BackColor = SystemColors.ControlDark;
-                btn.ForeColor = Color.Black;
+                btn.BackColor = Color.FromArgb(45, 45, 60);
+                btn.ForeColor = Color.White;
                 btn.Click += (s, e) => EquipItem(item);
             }
             else
             {
                 btn.Text = "Buy";
-                btn.BackColor = Color.White;
-                btn.ForeColor = Color.Black;
+                btn.BackColor = Color.FromArgb(0, 120, 60);
+                btn.ForeColor = Color.White;
                 btn.Click += (s, e) => BuyItem(item);
             }
 
             panel.Controls.AddRange(new Control[] { picBox, lblName, lblPrice, btn });
             return panel;
         }
+
 
         private Image GetItemImage(string itemName)
         {
