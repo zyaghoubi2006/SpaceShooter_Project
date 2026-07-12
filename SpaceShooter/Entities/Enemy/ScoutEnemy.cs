@@ -1,35 +1,48 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SpaceShooter.Entities.Enemy;
 using System.Drawing;
+using SpaceShooter.Core;
 
-namespace SpaceShooter.Entities.Enemy
+namespace SpaceShooter.Entities.Enemies
 {
-    class ScoutEnemy:EnemyBase
+    public class ScoutEnemy : Enemy
     {
-        private float AliveTime = 0f;
+        private float _time = 0f;
+        private const float Speed = 200f;
+        private const float Amplitude = 80f;
+        private const float Frequency = 3f;
+        private readonly float _centerX;
 
-        public ScoutEnemy(int x, int y, Rectangle bound) : base(x, y, 35, 34, 180f, 10, 150, bound)
+        protected override Image Sprite => GameAssets.ScoutEnemyImg;
+
+
+        public ScoutEnemy(float x, float y) : base(x, y, 48, 48)
         {
-
+            Health = 20;
+            MaxHealth = 20;
+            ScoreValue = 20;
+            CoinValue = 8;
+            Color = Color.Yellow;
+            _centerX = x;
         }
 
-        public override void Update(float daltaTime)
+        public override void Update(float deltaTime)
         {
-            AliveTime += daltaTime;
-            Y += Speed * daltaTime;
-            X += (float)Math.Sin(AliveTime * 4f) * 150f * daltaTime;
+            _time += deltaTime;
 
-            if (Y > Bounds.Height)
-                IsAlive = false;
-        }
+            Position = new PointF(
+                Position.X,
+                Position.Y + Speed * deltaTime
+            );
 
-        public override void Draw(Graphics g)
-        {
-            g.FillRectangle(Brushes.MediumSpringGreen, Bounds);
+            Position = new PointF(
+                _centerX + (float)Math.Sin(_time * Frequency) * Amplitude,
+                Position.Y
+            );
+
+            if (Position.Y > 900)
+            {
+                IsActive = false;
+            }
         }
     }
 }

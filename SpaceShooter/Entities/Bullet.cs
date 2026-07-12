@@ -1,42 +1,48 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
+using System.Windows.Forms;
 using SpaceShooter.Core;
-using System.Drawing;
 
 namespace SpaceShooter.Entities
 {
-    class Bullet:GameEngin
+    public class Bullet : GameObject
     {
-        public int SpeedX { get; set; }
-        public int SpeedY { get; set; }
-        public bool IsPlayerBullet { get; set; }
-        
+        public int Damage { get; private set; }
+        public bool IsPlayerBullet { get; private set; }
 
-        public Bullet(float x, float y, int width, int height, int speedX, int speedY, bool isPlayerBullet = true)
+        private const float Speed = 500f;
 
+        public Bullet(float x, float y, float directionX, float directionY, bool isPlayerBullet)
+            : base(x, y, 15, 15)
         {
-            X = x;
-            Y = y;
-            Width = width;
-            Height = height;
-            SpeedX = speedX;
-            SpeedY = speedY;
+            Position = new PointF(x - Size.Width / 2f, y);
+
+            float length = (float)System.Math.Sqrt(directionX * directionX + directionY * directionY);
+            if (length > 0)
+            {
+                directionX /= length;
+                directionY /= length;
+            }
+
+            Velocity = new PointF(directionX * Speed, directionY * Speed);
+            Damage = 10;
             IsPlayerBullet = isPlayerBullet;
         }
 
         public override void Update(float deltaTime)
         {
-            X += SpeedX * deltaTime;
-            Y += SpeedY * deltaTime;
+            base.Update(deltaTime);
+
+            if (Position.X < 0 || Position.X > Screen.PrimaryScreen.Bounds.Width ||
+                Position.Y < 0 || Position.Y > Screen.PrimaryScreen.Bounds.Height)
+            {
+                IsActive = false;
+            }
         }
 
         public override void Draw(Graphics g)
         {
-            Brush brush = IsPlayerBullet ? Brushes.Yellow : Brushes.OrangeRed;
-            g.FillRectangle(brush, Bounds);
+            Image Img = IsPlayerBullet ? GameAssets.BulletImg : GameAssets.EnemyBulletImg;
+            g.DrawImage(Img, Position.X, Position.Y, Size.Width, Size.Height);
         }
     }
 }

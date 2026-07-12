@@ -1,46 +1,51 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 using SpaceShooter.Core;
-using System.Drawing;
 
-namespace SpaceShooter.Entities.Enemy
+namespace SpaceShooter.Entities.Enemies
 {
-     class ShooterEnemy :EnemyBase
+    public class ShooterEnemy : Enemy
     {
-        private float shootTimer;
-        private float fireRate = 1.5f;
-        private List<Bullet> enemyBullets;
+        private float _shootTimer = 0f;
+        private const float ShootInterval = 1.5f;
+        private const float Speed = 80f;
+
+        private AudioManager audioManager;
+        protected override Image Sprite => GameAssets.ShooterEnemyImg;
 
 
-        public ShooterEnemy(int x, int y, Rectangle gameBounds, List<Bullet> enemyBullets) : base(x, y, 45, 45, 80f, 30, 200, gameBounds)
+        public ShooterEnemy(float x, float y, AudioManager audioManager) : base(x, y, 60, 60)
         {
-            this.enemyBullets = enemyBullets;
+            Health = 50;
+            MaxHealth = 50;
+            ScoreValue = 30;
+            CoinValue = 15;
+            Color = Color.Purple;
+            Velocity = new PointF(0, Speed);
+
+            this.audioManager = audioManager;
         }
 
         public override void Update(float deltaTime)
         {
-            shootTimer += deltaTime;
-            if (shootTimer >= fireRate)
+            base.Update(deltaTime);
+
+            _shootTimer += deltaTime;
+            if (_shootTimer >= ShootInterval)
             {
-
-                shootTimer = 0;
-
-                enemyBullets.Add(new Bullet(X + Width / 2 - 3,Y + Height,6,15,0,250,false));
-
+                Shoot();
+                _shootTimer = 0f;
             }
 
-            Y += Speed * deltaTime;
-
-            if (Y > Bounds.Height) IsAlive = false;
+            if (Position.Y > 900)
+            {
+                IsActive = false;
+            }
         }
 
-        public override void Draw(Graphics g)
+        protected override void Shoot()
         {
-            
-            g.FillRectangle(Brushes.BlueViolet, Bounds);
+            FireBullet(0f, 300f);
+            audioManager.PlaySoundEffect(@"Resources\enemyshoot.wav");
         }
     }
 }

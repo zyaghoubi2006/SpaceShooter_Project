@@ -1,33 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SpaceShooter.Entities.Enemy;
-using System.Drawing;
+﻿using System.Drawing;
+using SpaceShooter.Core;
 
-namespace SpaceShooter.Entities.Enemy
+namespace SpaceShooter.Entities.Enemies
 {
-    class StanderdEnemy:EnemyBase
+    public class StandardEnemy : Enemy
     {
-        public StanderdEnemy(int x, int y, Rectangle bound) : base(x, y, 35, 35, 120f, 20, 100, bound)
-        {
+        private const float Speed = 150f;
+        protected override Image Sprite => GameAssets.StandardEnemyImg;
 
+
+        public StandardEnemy(float x, float y) : base(x, y, 60, 60)
+        {
+            Health = 30;
+            MaxHealth = 30;
+            ScoreValue = 10;
+            CoinValue = 5;
+            Color = Color.Red;
+            Velocity = new System.Drawing.PointF(0, Speed);
         }
 
         public override void Update(float deltaTime)
         {
-            Y += Speed * deltaTime;
-            if (Y > gameBounds.Height)
-                IsAlive = false;
-
-
-
-        }
-
-        public override void Draw(Graphics g)
-        {
-            g.FillRectangle(Brushes.Crimson, Bounds);
+            base.Update(deltaTime);
+            if (Position.Y > 900)
+            {
+                IsActive = false;
+            }
         }
     }
 }

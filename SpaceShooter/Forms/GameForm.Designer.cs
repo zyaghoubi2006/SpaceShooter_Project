@@ -44,8 +44,6 @@ namespace SpaceShooter.Forms
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Name = "GameForm";
             this.Text = "Form1";
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.GameForm_KeDown);
-            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.GameForm_KeyUp);
             ((System.ComponentModel.ISupportInitialize)(this.eventLog1)).EndInit();
             this.ResumeLayout(false);
 
