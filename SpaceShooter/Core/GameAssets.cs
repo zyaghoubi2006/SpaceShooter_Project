@@ -23,15 +23,12 @@ namespace SpaceShooter.Core
 
         public static void Load()
         {
-            PlayerImg = MakeTransparent(Properties.Resources.player);
             StandardEnemyImg = MakeTransparent(Properties.Resources.standardenemy);
             ScoutEnemyImg = MakeTransparent(Properties.Resources.scoutenemy);
             ShooterEnemyImg = MakeTransparent(Properties.Resources.shooterenemy);
             HeavyTankEnemyImg = MakeTransparent(Properties.Resources.heavytankenemy);
             TerroristEnemyImg = MakeTransparent(Properties.Resources.terroristenemy);
-            BulletImg = MakeTransparent(Properties.Resources.bullet);
             EnemyBulletImg = MakeTransparent(Properties.Resources.bullet1);
-            BackgroundImg = Properties.Resources.background;
 
             LoadEquippedItems();
         }
