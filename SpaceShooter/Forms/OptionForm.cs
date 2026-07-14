@@ -30,7 +30,6 @@ namespace SpaceShooter.Forms
 
         private void BuildLayout()
         {
-            // ---- تنظیمات فرم مثل ShopForm ----
             this.Size = new Size(800, 600);
             this.StartPosition = FormStartPosition.CenterScreen;
             this.FormBorderStyle = FormBorderStyle.FixedDialog;
@@ -41,7 +40,6 @@ namespace SpaceShooter.Forms
             int boxWidth = 300;
             int centerX = (this.ClientSize.Width - boxWidth) / 2;
 
-            // === پنل Audio Controls ===
             var grpAudio = new GroupBox
             {
                 Text = "Audio Controls",
@@ -71,7 +69,6 @@ namespace SpaceShooter.Forms
             comboBox1.ForeColor = Color.White;
             comboBox1.FlatStyle = FlatStyle.Flat;
 
-            // === پنل Controls Guide ===
             var grpGuide = new GroupBox
             {
                 Text = "Controls Guide",
@@ -94,12 +91,10 @@ namespace SpaceShooter.Forms
                 Text =
                     "↑ ← ↓ →   Move ship\n\n" +
                     "Space     Shoot\n\n" +
-                    "P         Pause\n\n" +
-                    "Esc       Back to menu"
+                    "Esc       Pause - Back to menu"
             };
             grpGuide.Controls.Add(lblGuide);
 
-            // === دکمه Back پایین صفحه مثل ShopForm ===
             if (btnBack != null)
             {
                 btnBack.Text = "Back to Menu";
